@@ -274,10 +274,21 @@ public class QuerydslBasicTest {
             .leftJoin(team).on(member.username.eq(team.name))
             .fetch();
 
-    assertThat(result)
-            .extracting("username")
-            .containsExactly("teamA","teamB");
 
+    for (Tuple tuple : result) {
+      System.out.println("tuple = " + tuple);
+    }
+  }
+
+  @Test
+  public void fetchJoinNo(){
+    em.flush();
+    em.clear();
+
+    Member findMember = queryFactory
+            .selectFrom(member)
+            .where(member.username.eq("member1"))
+            .fetchOne();
 
 
   }
